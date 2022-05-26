@@ -1,0 +1,313 @@
+@font-face {
+  font-family: "Mario Text";
+  src: url('./fonts/PressStart2P-vaV7.ttf');
+
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Mario Text";
+  user-select: none;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  width: 100%;
+  height: 500vh;
+  
+}
+.flex {
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  min-width: fit-content;
+  width:300%;
+  transform: rotate(90deg) translateY(-100vh);
+  transform-origin: top left;
+}
+.home {
+  display:flex;
+  align-items: center;
+  width: 100%;
+  height:100vh;
+  background: url('./images/mario.webp') repeat;
+  background-size:contain;
+  gap: 1%;
+}
+
+.wrapper {
+  width: 200vw;
+  height:100vw;
+  transform: rotate(-90deg) translateX(-100vh);
+  transform-origin: top left;
+  overflow-y: scroll; 
+  overflow-x: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar{
+  display:none;
+}
+#root{
+  height: 0;
+}
+
+.mariostand, .mariostandBack, .mario1, .mario2, .mario3, .mario1-back, .mario2-back, .mario3-back, .mario-jump, .mario-jumpback{
+  display:flex;
+  width: 96px;
+  height: 192px;
+  background-position: center;
+  background-size:cover;
+  position:fixed;
+  background-repeat: no-repeat;
+  justify-self: 'flex-start';
+  align-self:flex-end;
+  bottom: 13vh;
+}
+@media screen and (max-width: 550px){
+  .mariostand, .mariostandBack, .mario1, .mario2, .mario3, .mario1-back, .mario2-back, .mario3-back, .mario-jump, .mario-jumpback {
+    width: 64px;
+    height: 128px;
+  }
+  #info-block {
+    width: 60px;
+    height: 60px;
+  }
+}
+.mario-jump {
+  background-image: url('./images/mario-jump.png')
+}
+.mario-jumpback {
+  background-image: url('./images/mario-jumpback.png')
+}
+.mariostand {
+  background-image: url('./images/mariostand.png');
+}
+.mario1{
+  background-image: url('./images/mario-walk1.png');
+}
+.mario2{
+  background-image: url('./images/mario-walk2.png');
+}
+.mario3{
+  background-image: url('./images/mario-walk3.png');
+}
+.mariostandBack{
+  background-image: url('./images/mariostandback.png');
+}
+.mario1-back{
+  background-image: url('./images/mario-walkback1.png');
+}
+.mario2-back{
+  background-image: url('./images/mario-walkback2.png');
+}
+.mario3-back{
+  background-image: url('./images/mario-walkback3.png');
+}
+.about-flex{
+  display:flex;
+  flex-flow: column wrap;
+}
+#form > fieldset{
+  display:flex;
+  justify-self:center;
+  flex-flow: column wrap;
+  text-align: left;
+  gap: 5vh;
+  padding: 5%;  
+  height: 86.5%;
+}
+.center {
+  text-align: center;
+}
+#form label {
+  width: 50%;
+}
+.message-label{
+  width: 75% !important;
+  height: 35% !important;
+  display:flex;
+  align-self:center;
+}
+#form input {
+  width: 100%;
+  height: 32px;
+  padding: 1rem;
+}
+#form button {
+  width: 50%;
+  height: 32px;
+  align-self: center;
+}
+#form textarea {
+  resize: none; 
+  padding: .5rem;
+}
+.block, .broken {
+  width: 80px;
+  height: 80px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+    position:relative;
+    top: 30vh;
+  z-index: 2;
+ }
+ .broken {
+  background-image: url('./images/question-block.png');
+  animation: brokenBlock .25s linear;
+
+  animation-fill-mode: forwards;
+}
+.block {
+    background-image: urL('./images/question-block.png');
+}
+@keyframes brokenBlock{
+  0% {
+    transform: translateY(0);
+    background-image: url('./images/question-block.png')
+  }
+  50% {
+    transform: translateY(-50%)
+  }
+  100% {
+    transform: translateY(0);
+    background-image: url('./images/hit-block.png')
+  }
+}
+h1 {
+  border: 3px solid;
+  border-style:dashed;
+  text-align: center;
+  margin-left: 100vw;
+  width: 100vw;
+}
+.coin, .nocoin{
+  background-image: url('./images/mario-coin.gif');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 5vw;
+  height: 5vh;
+  position:fixed;
+  bottom: 40vh;
+}
+.nocoin {
+    opacity: 0;
+}
+#about-open, #skills-open, #form-open {
+  display:flex;
+  height: 100vh;
+  justify-content: flex-start;
+  gap: 10px;
+}
+@keyframes showAbout {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.show-about, .hide-about, .show-skills, .hide-skills {
+  width: 100vw;
+  height: fit-content;
+  opacity: 0;
+  background-color:black;
+  padding: 2.5vw;
+  border-top-right-radius:10%;
+  border-bottom-left-radius: 5%;
+  margin-top: 5vh;
+  margin-left: 1em;
+  text-align:justify;
+  font-size: 2.5vh;
+  color: white;
+}
+.show-about:after, .hide-about:after, .show-skills:after, .hide-skills:after {
+  content: "";
+  display: inline-block;
+  width: 100%;
+}
+.show-about p, .hide-about p, .show-skills p, .hide-skills p {
+  /*width: 100%;
+  height: 100%;*/
+}
+.show-about, .show-skills {
+    animation-name: showAbout;
+  animation-delay: 0.5s;
+  animation-duration: .75s;
+  animation-fill-mode: forwards;
+}
+.hide-form {
+  opacity: 0;
+  visibility:hidden;
+}
+.show-form {
+  animation-name: showAbout;
+  animation-delay: 0.5s;
+  animation-duration: 0.75s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+.welcome {
+  margin-left: 3%;
+  max-width: 100vw;
+  text-align: center;
+}
+.left, .right, .up {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  color: white;
+  border: 4px solid;
+  text-align: center;
+  font-size: 3vh;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+}
+.left {
+  border-right: none;
+}
+.right {
+  border-left: none;
+}
+a {
+  text-decoration: none;
+  color: red;
+}
+.gamepad {
+  height: 10vh;
+  width: 200px;
+  display:flex;
+  position: fixed;
+  bottom: 1vh;
+  left: 100px;
+  user-select: none;
+  z-index: 1;
+  background-color:grey;
+}
+.left:active, .right:active, .up:active {
+  background-color: rgb(185, 184, 184);
+  border-width:6px;
+  transform: scale(90%)
+}
+.up-active {
+  background-color: rgb(185, 184, 184);
+}
+.left div, .right div, .up div {
+  border: solid black;
+  border-width: 0 4px 4px 0;
+  display:inline-block;
+  padding:3px;
+  transform: rotate(135deg);
+
+}
+.right div {
+  transform: rotate(-45deg)
+}
+.up div {
+  transform: rotate(225deg);
+}
