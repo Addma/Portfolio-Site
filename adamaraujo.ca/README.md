@@ -1,1 +1,0 @@
-### AdamAraujo.ca Portfolio Site
