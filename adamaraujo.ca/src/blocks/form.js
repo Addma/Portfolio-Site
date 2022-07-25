@@ -34,6 +34,7 @@ const Form = ({className}) => {
 
 }
     return (
+        <div>
         <form className={className} id="form" onSubmit={handleSubmit}>
         <fieldset>
         <legend>Send me an E-mail 😏</legend>
@@ -44,6 +45,7 @@ const Form = ({className}) => {
         <button type="submit">Send</button>
         </fieldset>
         </form>
+        </div>
     )
 }
 

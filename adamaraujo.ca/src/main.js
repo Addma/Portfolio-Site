@@ -23,7 +23,7 @@ const App = () => {
      const scroll = () => {
         if (left === 0) return
         return document.querySelector('.wrapper').scrollTop
-    }
+    } 
     const screen = window.screen.width;
      const coins = () => document.querySelectorAll('#coin-div')
     const selectBlocks = document.querySelectorAll('#info-block')
@@ -70,7 +70,7 @@ const App = () => {
     //Scrolls mario, activated by the wrapper div which is the element being scrolled
     const scrollMario = (e) => {
         setScroll(document.querySelector('.wrapper').scrollLeft);
-        e.stopPropagation();
+        e.stopPropagation(); 
         e.preventDefault();
         if (lastScroll > 0) {
             document.querySelector('.wrapper').scrollLeft = 0;

@@ -8,7 +8,7 @@ export default function TextAnimation() {
     )
 }
 const animation = keyframes`
- 0% { opacity: 0; transform: translateY(-800vh); }
+ 0% { opacity: 0; transform: translateY(-500vh); }
  25% { opacity: 0.25; transform: translateY(-50vh);}
  50% { opacity: 0.5; }
  75% { opacity: 0.75; }

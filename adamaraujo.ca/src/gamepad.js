@@ -16,6 +16,9 @@ export default function GamePad({left, callBack, out}){
         clearInterval(timer)
         setTimer(null)
     }
+    /**
+     * when the mouse moves out of the gamepad, stop the running interval.
+     */
     if (out) {
         clearInterval(timer)
     }

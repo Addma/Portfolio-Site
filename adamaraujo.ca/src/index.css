@@ -34,7 +34,7 @@ body {
 .home {
   display:flex;
   align-items: center;
-  width: 100%;
+  width: 200%;
   height:100vh;
   background: url('./images/mario.webp') repeat;
   background-size:contain;
