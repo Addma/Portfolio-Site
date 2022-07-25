@@ -20,12 +20,12 @@ const App = () => {
     const [blockHeight, setBlockHeight] = useState(0)
     const [marioHeight, setMarioHeight] = useState(0)
     const [lastScroll, setScroll] = useState(0);
-     const scroll = () => {
+    const scroll = () => {
         if (left === 0) return
         return document.querySelector('.wrapper').scrollTop
-    } 
+    }
     const screen = window.screen.width;
-     const coins = () => document.querySelectorAll('#coin-div')
+    const coins = () => document.querySelectorAll('#coin-div')
     const selectBlocks = document.querySelectorAll('#info-block')
     const marioPos = () => document.querySelector(`.mario`).getBoundingClientRect()
     const handleKeys = (e) => {
