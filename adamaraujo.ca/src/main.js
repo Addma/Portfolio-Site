@@ -27,6 +27,15 @@ const App = () => {
     const [moveRight, setMoveRight] = useState(null);
     const [moveLeft, setMoveLeft] = useState(null);
     const selectBlocks = document.querySelectorAll('#info-block')
+    const marioJump = useCallback(() => {
+        if (jumping){
+            return
+        }
+        else {
+            setJump(true)
+        }
+        setMario(marioForward === marioFacing ? stand : standBack);
+    }, [jumping, marioFacing])
     const handleKeys = useCallback((e) => {
         if (document.activeElement.id === 'message' || document.activeElement.tagName.toLowerCase() === 'input' || jumping){
             return
@@ -51,7 +60,7 @@ const App = () => {
             }*/
             marioJump();
         }
-    })
+    }, [jumping, moveLeft, moveRight, marioJump])
     const handleKeysUp = useCallback((e) => {
         if (document.activeElement.id === 'message' || document.activeElement.tagName.toLowerCase() === 'input' || jumping){
             return
@@ -77,7 +86,7 @@ const App = () => {
                 
                 
         }
-    })
+    }, [moveLeft, moveRight, jumping])
     useLayoutEffect(() => {
         setMarioHeight(marioRef.current.getBoundingClientRect().top)
         setBlockHeight(blockWrapper.current.getBoundingClientRect().bottom)
@@ -89,9 +98,6 @@ const App = () => {
             return () => window.removeEventListener('resize', updateScreen);
         }, [screen, marioHeight])
      useEffect(() => {
-        for (const element of wrapperRef.current.children){
-            element.blur();
-        }
         //If mario isn't already standing, make him stand after not moving for 0.7s
         let notMoving = setInterval(() => {
             if (marioForward === marioFacing){
@@ -151,15 +157,7 @@ const App = () => {
             setMario(marioFacing[prev]);
         }
     } 
-    const marioJump = () => {
-        if (jumping){
-            return
-        }
-        else {
-            setJump(true)
-        }
-        setMario(marioForward === marioFacing ? stand : standBack);
-    }
+
     const handleGamepad = (e) => {
         let direction = e.target.className
         if (direction === 'up'){
@@ -189,7 +187,7 @@ const App = () => {
         }, 600)
     }
     return(
-        <div className="wrapper" onScroll={scrollMario} onMouseMove={checkGamepad} ref={wrapperRef}>
+        <div className="wrapper" onScroll={scrollMario} onMouseMove={checkGamepad} onDoubleClick={marioJump} ref={wrapperRef}>
         <div className="flex">
         <div className="home" >
             <Gamepad left={left} callBack={handleGamepad} out={gamepad} gamepadRef={gamepadRef} />
