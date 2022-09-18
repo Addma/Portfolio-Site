@@ -1,6 +1,6 @@
 import { Walk } from './animations/mario'
-import { useState } from 'react'
-export default function GamePad({left, callBack, out}){
+import React, { useState, forwardRef } from 'react'
+const GamePad = ({gamepadRef, left, out, callBack }) => {
     const [timer, setTimer] = useState(null)
     function mouseDown(e) {
         if (e.type === 'mousedown')
@@ -10,7 +10,7 @@ export default function GamePad({left, callBack, out}){
         }
         setTimer(setInterval(() => {
             callBack(e)
-        }, 100))
+        }, 120))
 }
     function mouseUp(e) {
         clearInterval(timer)
@@ -23,11 +23,15 @@ export default function GamePad({left, callBack, out}){
         clearInterval(timer)
     }
     return (
-        <Walk left={left} className='gamepad' onMouseUp={mouseUp}>
-                <div className="left" onMouseDown={mouseDown} onMouseUp={mouseUp} onTouchStart={mouseDown} onTouchEnd={mouseUp}>&lt;</div>
-                <div className="up" onClick={e => callBack(e)}>^</div>
-                <div className="right" onMouseDown={mouseDown} onMouseUp={mouseUp} onTouchStart={mouseDown} onTouchEnd={mouseUp}>&gt;</div>
+        <Walk left={left} className='gamepad' onMouseUp={mouseUp} ref={gamepadRef}>
+                <div></div>
+                <div className="up" onClick={e => callBack(e)}><div className="triangle"></div></div>
+                <div></div>
+                <div className="left" onMouseDown={mouseDown} onMouseUp={mouseUp} onTouchStart={mouseDown} onTouchEnd={mouseUp}><div className="triangle"></div></div>
+                <div></div>
+                <div className="right" onMouseDown={mouseDown} onMouseUp={mouseUp} onTouchStart={mouseDown} onTouchEnd={mouseUp}><div className="triangle"></div></div>
             </Walk>
     )
 
 }
+export default GamePad;

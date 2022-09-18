@@ -15,9 +15,10 @@ document.body.onkeydown = e => {
   }
   e.preventDefault()
 }
-ReactDOM.render(
+ReactDOM.render(<React.StrictMode><App/></React.StrictMode>, container);
+/**ReactDOM.render(
   <React.StrictMode>
       <App/>
   </React.StrictMode>,
-  document.getElementById('root')
-);
+  container
+);*/

@@ -6,5 +6,4 @@ export default function Coin({touched}) {
         :
         <div id='coin-div' className="coin"></div>
     )
-
 }

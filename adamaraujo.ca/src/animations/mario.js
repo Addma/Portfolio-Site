@@ -2,15 +2,15 @@ import styled, {keyframes} from 'styled-components'
 import { css } from 'styled-components'
 import { useRef } from 'react'
 //Styled component changing "left" style value pushing mario forward or backward
-const Mario = ({ className, left, isJumping, forward, callBack, blockHeight, stopJump}) => {
+const Mario = ({ className, left, isJumping, forward, callBack, blockHeight, stopJump, marioRef}) => {
     if (isJumping){
         if (forward) {
-            return <Jump className="mario-jump mario"  left={left} onAnimationStart={callBack} onAnimationEnd={stopJump} y={blockHeight}></Jump>
+            return <Jump className="mario-jump mario" ref={marioRef} left={left} onAnimationStart={callBack} onAnimationEnd={stopJump} y={blockHeight}></Jump>
         } else {
-            return <Jump className="mario-jumpback mario" left={left} onAnimationStart={callBack} onAnimationEnd={stopJump} y={blockHeight}></Jump>
+            return <Jump className="mario-jumpback mario" ref={marioRef} left={left} onAnimationStart={callBack} onAnimationEnd={stopJump} y={blockHeight}></Jump>
         }
     } else {
-        return <Walk className={className} left={left}></Walk>
+        return <Walk ref={marioRef} className={className} left={left}></Walk>
     }
 }
     const jumpAnimation = (y) => keyframes`
