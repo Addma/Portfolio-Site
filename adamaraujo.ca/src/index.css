@@ -82,6 +82,7 @@ body {
   }
   .show-about, .show-skills {
     font-size: 14px;
+    max-width: 300px;
   }
   .block {
     top: 60vh;
@@ -137,6 +138,7 @@ body {
   flex-flow: column wrap;
   text-align: left;
   gap: 5vh;
+  margin-top: 2rem;   
   padding: 5%;  
   height: 86.5%;
 }
@@ -173,7 +175,6 @@ body {
   background-position: center;
   background-size: contain;
     position:relative;
-  top: 40vh;
   z-index: 2;
  }
  .broken {
@@ -220,15 +221,24 @@ h1 {
 #about-open, #skills-open, #form-open {
   display:flex;
   height: 100vh;
-  justify-content: flex-start;
   gap: 10px;
+  
+}
+#about-open {
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+}
+#about-open #skills-open, #form-open {
+  padding: 1rem;
+
 }
 @keyframes showAbout {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 .show-about, .hide-about, .show-skills, .hide-skills {
-  max-width: 75vw;
+  max-width: 70vw;
   height: fit-content;
   opacity: 0;
   background-color:black;
@@ -241,14 +251,13 @@ h1 {
   font-size: 16px;
   color: white;
 }
+.show-about p, .show-skills p {
+  padding: 1rem;
+}
 .show-about:after, .hide-about:after, .show-skills:after, .hide-skills:after {
   content: "";
   display: inline-block;
   width: 100%;
-}
-.show-about p, .hide-about p, .show-skills p, .hide-skills p {
-  /*width: 100%;
-  height: 100%;*/
 }
 .show-about, .show-skills {
     animation-name: showAbout;

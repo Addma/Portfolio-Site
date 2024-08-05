@@ -4,10 +4,12 @@ import Skills from './skills'
 import Form from './form'
 
 const Block = ({broken, type, blockRef}) => {
+
+
     const typeOfBlock = () => {
         if (type === 'about') {
           return broken ?
-        <div id='about-open'><div id='info-block' className="broken" ref={blockRef}> </div><About className='show-about'><div></div></About></div>
+        <div id='about-open'><About className='show-about'></About><div id='info-block' className="broken" ref={blockRef}> </div></div>
         :
          <div id='about-open'><div id='info-block' className="block" ref={blockRef}></div><About className='hide-about'/></div>      
         } else if (type === 'skills'){

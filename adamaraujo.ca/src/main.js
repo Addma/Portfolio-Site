@@ -10,7 +10,7 @@ import { useCallback } from "react";
 const App = () => {
 
     const [prev, setPrev] = useState(0)//Keeps track of index of mario's class name image
-    const [left, setLeft] = useState(window.screen.width < 550 ? 100 : 300)//Value of mario's distance from beginning
+    const [left, setLeft] = useState(window.innerWidth < 550 ? 100 : 300)//Value of mario's distance from beginning
     const [marioFacing, setMarioFacing] = useState(marioForward)//Tracks state of mario
     const [mario, setMario] = useState(stand)
     const [jumping, setJump] = useState(false)
@@ -19,14 +19,43 @@ const App = () => {
     const [blockHeight, setBlockHeight] = useState(0)
     const [marioHeight, setMarioHeight] = useState(0)
     const [lastScroll, setScroll] = useState(0);
-    const [screen, setScreen] = useState(window.screen.width);
+    const [screen, setScreen] = useState(window.innerWidth);
     const marioRef = useRef(null);
     const wrapperRef = useRef(null);
     const gamepadRef = useRef(null);
     const blockWrapper = useRef(null);
     const [moveRight, setMoveRight] = useState(null);
     const [moveLeft, setMoveLeft] = useState(null);
-    const selectBlocks = document.querySelectorAll('#info-block')
+    const [logMoves, setLogMoves] = useState([]);
+    //const [marioObj, setMarioObj] = useState({})
+    window.onzoom = function(e) {
+        console.log("AYO!!!");
+        setScreen(window.innerWidth);
+        console.log("WIDTH", screen, window.innerWidth)
+    }
+
+    const resize = () =>  {
+        var oldresize = window.onresize;
+        window.onresize = function(e) {
+            var event = window.event || e;
+            if(typeof(oldresize) === 'function' && !oldresize.call(window, event)) {
+                return false;
+            }
+            if(typeof(window.onzoom) === 'function') {
+                return window.onzoom.call(window, event);
+            }
+        }};
+        resize();
+    const [controller, setController] = useState({
+        39: {
+            pressed: false
+        },
+        37: {
+            pressed: false
+        }
+    })
+
+
     const marioJump = useCallback(() => {
         if (jumping){
             return
@@ -37,61 +66,76 @@ const App = () => {
         setMario(marioForward === marioFacing ? stand : standBack);
     }, [jumping, marioFacing])
     const handleKeys = useCallback((e) => {
-        if (document.activeElement.id === 'message' || document.activeElement.tagName.toLowerCase() === 'input' || jumping){
+        setLogMoves(logMoves.push(e));
+        if (document.activeElement.id === 'message' || document.activeElement.tagName.toLowerCase() === 'input'){
             return
         }
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
         const key = e.key
         if (key === 'ArrowRight' && !moveRight){
-            setMarioFacing(marioForward)
-            setMoveRight(setInterval(() => wrapperRef.current.scrollBy(0, 30), 50));            
-        } else if (key === 'ArrowLeft' && !moveLeft){
-            setMarioFacing(marioBack)
-            setMoveLeft(setInterval(() => wrapperRef.current.scrollBy(0, -30), 50));
-        } else if (key === ' '){
-           /* if (moveRight){
-                setTimeout(() => clearInterval(moveRight), 1200);
+            if (controller[e.keyCode].pressed && e.type === "keyup"){
                 setMoveRight(null);
-            } else if (moveLeft){
-                setTimeout(() => clearInterval(moveLeft), 1200)
+            } else if (!controller[e.keyCode].pressed && e.type === "keydown" && !moveRight) {
+                setMarioFacing(marioForward)
+                setMoveRight(setInterval(() => wrapperRef.current.scrollBy(0, 30), 50));  
+            }
+        } else if (key === 'ArrowLeft' && !moveLeft){
+            if (controller[e.keyCode].pressed  || e.type === "keyup"){
                 setMoveLeft(null);
-            }*/
+            } else if (!controller[e.keyCode].pressed && e.type === "keydown" && !moveLeft) {
+                setMarioFacing(marioBack)
+                setMoveLeft(setInterval(() => wrapperRef.current.scrollBy(0, -30), 50));  
+            }
+        } else if (key === ' '){
             marioJump();
         }
-    }, [jumping, moveLeft, moveRight, marioJump])
-    const handleKeysUp = useCallback((e) => {
+    }, [controller, marioJump, moveLeft, moveRight, logMoves])
+
+    const selectBlocks = document.querySelectorAll('#info-block')
+
+    const handleController = useCallback((e) => {
+        
         if (document.activeElement.id === 'message' || document.activeElement.tagName.toLowerCase() === 'input' || jumping){
             return
         }
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        const key = e.key
-        if (key === 'ArrowRight'){
-            clearInterval(moveRight);
-            setMoveRight(null);
-        } else if (key === 'ArrowLeft'){
-            clearInterval(moveLeft);
-            setMoveLeft(null);
-        } else {
-            if (moveRight){
-                clearInterval(moveRight);
-                setMoveRight(null);
-            } else if (moveLeft){
-                clearInterval(moveLeft);
-                setMoveLeft(null);
-            }
-                
-                
+        if (e.key === " "){
+            marioJump();
+            return;
         }
-    }, [moveLeft, moveRight, jumping])
+        try {
+            if (!controller[e.keyCode].pressed && e.type === "keydown"){
+                setController({
+                    ...controller,
+                    [e.keyCode]:
+                    {
+                        ...controller[e.keyCode],
+                        pressed: true
+                    }
+                })
+    
+            } else if (e.type === "keyup"){
+                setController({
+                    ...controller,
+                    [e.keyCode]:
+                    {
+                        ...controller[e.keyCode],
+                        pressed: false
+                    }
+                })
+            }
+            handleKeys(e);
+        }catch(err) {
+            console.log(err);
+        }
+
+    }, [controller, handleKeys, marioJump, jumping])
     useLayoutEffect(() => {
         setMarioHeight(marioRef.current.getBoundingClientRect().top)
         setBlockHeight(blockWrapper.current.getBoundingClientRect().bottom)
         function updateScreen() {
-            setScreen(window.screen.width);
+            setScreen(window.innerWidth);
           }
           window.addEventListener('resize',  updateScreen);
             updateScreen();
@@ -106,22 +150,35 @@ const App = () => {
                 setMario(standBack);
             }
         }, 600)
-        document.body.addEventListener('keydown', handleKeys);
-        document.body.addEventListener('keyup', handleKeysUp)
+        for(let key in controller){
+            if (!controller[key].pressed){
+                if (key === "39"){
+                    setMoveRight(null);
+                    clearInterval(moveRight);
+                } else if(key === "37"){
+                    setMoveLeft(null);
+                    clearInterval(moveLeft);
+                }
+            }
+        }
+        if (logMoves.length){
+            handleController(logMoves[logMoves.length-1]);
+
+        }
+        document.body.addEventListener('keydown', handleController);
+        document.body.addEventListener('keyup', handleController)
 
         return ( () => {
             clearInterval(notMoving)
-            document.body.removeEventListener('keydown', handleKeys);
-            document.body.removeEventListener('keyup', handleKeysUp)
+            document.body.removeEventListener('keydown', handleController);
+            document.body.removeEventListener('keyup', handleController)
 
         })
     }
-        ,[mario, marioFacing, handleKeys, handleKeysUp])
+        ,[mario, marioFacing, handleController, moveLeft, moveRight, controller])
 
     //Scrolls mario, activated by the wrapper div which is the element being scrolled
     const scrollMario = (e) => {
-        e.preventDefault();
-        e.stopPropagation(); 
         if (lastScroll > 0) {
             wrapperRef.current.scrollLeft = 0;
         }
@@ -135,7 +192,7 @@ const App = () => {
             setLeft(wrapperRef.current.scrollTop + 100)
         else
             setLeft(wrapperRef.current.scrollTop + 300)
-        setTimeout(updateMario, 50);  
+        setTimeout(updateMario, 30);  
         setScroll(wrapperRef.current.scrollLeft);
     }
     //Checks the prev index, if image animation complete, set image back to first frame, otherwise continue frames

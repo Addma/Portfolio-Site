@@ -1,8 +1,15 @@
 import Resume from '../Resources/adam_araujo_resume.pdf';
 const Skills = ({className}) => {
+    const clickParrly = (e) => {
+        e.preventDefault();
+        window.open("https://play.google.com/store/apps/details?id=com.keyptech.parrly");
+        window.open("https://parrly.com")
+    }
     return (
-        <div className={className}><p>I am proficient in Javascript and Java, and familiar with HTML, CSS, Python and C. Currently, I'm interning at ZHY interactive, a start-up that is
-        building web platforms. I am building apps with React Native, MongoDB and NodeJS. I'm also on a team currently developing a web platform connecting community food growers and community kitchens. You can view the progress <a href='http://www.foodreuseproject.com/' target='_blank' rel=' noopener noreferrer'>here</a>.
+        <div className={className}><p>I am proficient in Javascript and Java, and familiar with Python and C/C#.</p>
+        <p> I interned at SOTI Inc. in 2023 for a year, an EMM software provider where I was able to develop novel features and improved usability of MobiControl Android using C# .NET and Angular. 
+            I've also previously interned at ZHY Interactive for 3 months 2022 Sept-Dec, where I was able to build a 
+            web and mobile app using MERN and React Native called <a href={""} rel="noreferrer" onClick={clickParrly} target='_blank' >Parrly.</a>.
             </p>
             <p>You can view my resume <a href={Resume} target='_blank' >here.</a></p>
             </div>
