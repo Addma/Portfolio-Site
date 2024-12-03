@@ -27,11 +27,10 @@ const App = () => {
     const [moveRight, setMoveRight] = useState(null);
     const [moveLeft, setMoveLeft] = useState(null);
     const [logMoves, setLogMoves] = useState([]);
+    const [selectBlocks, setSelectBlocks] = useState(document.querySelectorAll('.block'))
     //const [marioObj, setMarioObj] = useState({})
     window.onzoom = function(e) {
-        console.log("AYO!!!");
         setScreen(window.innerWidth);
-        console.log("WIDTH", screen, window.innerWidth)
     }
 
     const resize = () =>  {
@@ -90,8 +89,8 @@ const App = () => {
         }
     }, [controller, marioJump, moveLeft, moveRight, logMoves])
 
-    const selectBlocks = document.querySelectorAll('#info-block')
-
+    useEffect(() => {
+    }, [blockHeight])
     const handleController = useCallback((e) => {
         
         if (document.activeElement.id === 'message' || document.activeElement.tagName.toLowerCase() === 'input' || jumping){
@@ -136,6 +135,7 @@ const App = () => {
         setBlockHeight(blockWrapper.current.getBoundingClientRect().bottom)
         function updateScreen() {
             setScreen(window.innerWidth);
+            setSelectBlocks(document.querySelectorAll('.block'))
           }
           window.addEventListener('resize',  updateScreen);
             updateScreen();
@@ -248,7 +248,8 @@ const App = () => {
         <div className="flex">
         <div className="home" >
             <Gamepad left={left} callBack={handleGamepad} out={gamepad} gamepadRef={gamepadRef} />
-            <TextAnimation/>
+            <h3 className="text-animation">Double click or press space to jump and scroll or use the left/right arrow keys to move. Alternatively, use the gamepad under Mario.</h3>
+            {/*<TextAnimation/>*/}
             <div className="coins">
             <Coin touched={true}/>
             </div>

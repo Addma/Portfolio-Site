@@ -4,22 +4,17 @@ import Skills from './skills'
 import Form from './form'
 
 const Block = ({broken, type, blockRef}) => {
-
-
-    const typeOfBlock = () => {
-        if (type === 'about') {
-          return broken ?
-        <div id='about-open'><About className='show-about'></About><div id='info-block' className="broken" ref={blockRef}> </div></div>
-        :
-         <div id='about-open'><div id='info-block' className="block" ref={blockRef}></div><About className='hide-about'/></div>      
-        } else if (type === 'skills'){
-            return broken ? <div id='skills-open'><div id='info-block' className='broken' ref={blockRef}></div><Skills className='show-skills' /></div> :
-            <div id='about-open'><div id='info-block' className='block' ref={blockRef}></div><Skills className='hide-skills' /></div>
-        } else {
-            return broken ? <div id='form-open'><div id='info-block' className='broken' ref={blockRef}></div><Form className='show-form' /></div> :
-            <div id='form-open'><div id='info-block' className='block' ref={blockRef}><Form className='hide-form' /></div></div>
-        }
+    let display = broken ? 'show' : 'hide';
+    console.log("TYPE", type);
+    const getType = () => {
+        return type === 'about' ? <About className={`${display}-about`}/> : type === 'skills' ? <Skills className={`${display}-skills`}/> : <Form id={`${display}-open`} className={`${display}-form`}/>
     }
+    const typeOfBlock = () => {
+          return broken ?
+        <div id={`${type}-open`}>{getType()}<div className="broken" ref={blockRef}> </div></div>
+        :
+         <div id={`${type}-open`}><div style={{}} className="block" ref={blockRef}></div>{getType()}</div>      
+        }
     return typeOfBlock()
 }
 

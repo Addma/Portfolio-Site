@@ -70,34 +70,8 @@ body {
   align-self:flex-end;
   bottom: 13vh;
 }
-@media screen and (max-width: 550px){
-  .mariostand, .mariostandBack, .mario1, .mario2, .mario3, .mario1-back, .mario2-back, .mario3-back, .mario-jump, .mario-jumpback {
-    width: 64px;
-    height: 128px;
-  }
-  #info-block {
-    width: 60px;
-    height: 60px;
-    top: 40vh;
-  }
-  .show-about, .show-skills {
-    font-size: 14px;
-    max-width: 300px;
-  }
-  .block {
-    top: 60vh;
-  }
-  .gamepad {
-    width: 90px !important;
-  }
-  .gamepad > div {
-    width: 30px !important;
-    height: 30px !important;
-  }
-  .triangle {
-    border-bottom-width: 10px !important;
-  }
-}
+
+
 .mario-jump {
   background-image: url('./images/mario-jump.png')
 }
@@ -168,23 +142,31 @@ body {
   resize: none; 
   padding: .5rem;
 }
-.block, .broken {
+.broken {
   width: 80px;
   height: 80px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-    position:relative;
   z-index: 2;
- }
- .broken {
   background-image: url('./images/question-block.png');
   animation: brokenBlock .25s linear;
-
   animation-fill-mode: forwards;
-}
+  top: 40vh;
+  position:fixed;
+  align-self: flex-start;
+ }
 .block {
-    background-image: urL('./images/question-block.png');
+    background-image: url('./images/question-block.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position:fixed;
+    width: 80px;
+    height: 80px;
+    top: 40vh;
+    align-self: flex-start;
+
 }
 @keyframes brokenBlock{
   0% {
@@ -222,23 +204,21 @@ h1 {
   display:flex;
   height: 100vh;
   gap: 10px;
-  
-}
-#about-open {
+  padding: 1rem;
   flex-direction: column;
   justify-content:flex-start;
   align-items: center;
+  line-height:1.5;
 }
-#about-open #skills-open, #form-open {
-  padding: 1rem;
-
+#form-open {
+  flex-direction: row;
 }
 @keyframes showAbout {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 .show-about, .hide-about, .show-skills, .hide-skills {
-  max-width: 70vw;
+  width: 70vw;
   height: fit-content;
   opacity: 0;
   background-color:black;
@@ -250,15 +230,12 @@ h1 {
   text-align:justify;
   font-size: 16px;
   color: white;
+  letter-spacing: 1px;
 }
 .show-about p, .show-skills p {
   padding: 1rem;
 }
-.show-about:after, .hide-about:after, .show-skills:after, .hide-skills:after {
-  content: "";
-  display: inline-block;
-  width: 100%;
-}
+
 .show-about, .show-skills {
     animation-name: showAbout;
   animation-delay: 0.5s;
@@ -269,24 +246,32 @@ h1 {
   opacity: 0;
   visibility:hidden;
 }
+fieldset {
+  margin: 0;
+}
+#form-open {
+  display: block;
+}
 .show-form {
   animation-name: showAbout;
   animation-delay: 0.5s;
   animation-duration: 0.75s;
   animation-fill-mode: forwards;
   opacity: 0;
+  margin-left: 10rem;
 }
 .welcome {
   margin-left: 3%;
   max-width: 100vw;
+  min-width: 25vw;
   text-align: center;
 }
 
 .triangle {
   width: 0; 
   height: 0; 
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
   background-color: transparent;
   border-bottom: 25px solid rgb(119, 119, 119);
   pointer-events: none;
@@ -333,4 +318,54 @@ a {
   padding:1%;
   width: 100px;
   height: 100px;
+}
+@keyframes textAnimation{
+  0% { opacity: 0; transform: translateY(-500vh); }
+  25% { opacity: 0.25; transform: translateY(-50vh);}
+  50% { opacity: 0.5; }
+  75% { opacity: 0.75; }
+  100% { opacity: 1; }
+}
+.text-animation {
+  animation-name: textAnimation;
+  animation-delay: 0.5s;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  width: 50vw;
+  text-align: center;
+  margin-left: 50vw;
+  margin-right: 20vw;
+  letter-spacing: 1px;
+}
+@media screen and (max-width: 550px){
+  .mariostand, .mariostandBack, .mario1, .mario2, .mario3, .mario1-back, .mario2-back, .mario3-back, .mario-jump, .mario-jumpback {
+    width: 64px;
+    height: 128px;
+  }
+  .text-animation {
+    width: 75vw;
+  }
+  .show-about, .show-skills, .show-form {
+    font-size: 12px;
+    max-width: 75vw;
+  }
+  fieldset {
+    margin-left: 150px;
+  }
+  .broken, .block {
+    top: 50vh !important;  
+    width: 60px;
+    height: 60px;
+  }
+  .gamepad {
+    width: 90px !important;
+  }
+  .gamepad > div {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .triangle {
+    border-bottom-width: 10px !important;
+  }
+
 }
