@@ -328,6 +328,7 @@ a {
 }
 .text-animation {
   animation-name: textAnimation;
+  opacity: 0;
   animation-delay: 0.5s;
   animation-duration: 1s;
   animation-fill-mode: forwards;
